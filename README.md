@@ -1,3 +1,26 @@
+Fork of https://github.com/webview/webview_go.
+
+## new features
+
+1. You can check whether `webview.New()` returns a successful webview:
+```go
+func isWebviewSuccessful(w webview.WebView) bool {
+	log.Printf("%T", w)
+
+	w2 := reflect.ValueOf(w).Elem()
+	ww := w2.FieldByName("w")
+	return ww.UnsafePointer() != nil
+}
+```
+
+2. You can change code to set initial windows size before create, to solve window blink problem.
+`webview.h:2217`
+```c++
+      constexpr const int initial_width = 900;
+      constexpr const int initial_height = 650;
+      set_size(initial_width, initial_height, WEBVIEW_HINT_NONE);
+```
+
 # webview_go
 
 [![GoDoc](https://godoc.org/github.com/webview/webview_go?status.svg)](https://godoc.org/github.com/webview/webview_go)
